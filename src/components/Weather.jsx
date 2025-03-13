@@ -1,8 +1,11 @@
 import React from 'react'
 import './Weather.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faClock} from "@fortawesome/free-solid-svg-icons"
 import { faDroplet } from "@fortawesome/free-solid-svg-icons";
 import { faWind } from "@fortawesome/free-solid-svg-icons";
+import {faTemperatureArrowDown} from "@fortawesome/free-solid-svg-icons";
+import {faTemperatureArrowUp} from "@fortawesome/free-solid-svg-icons";
 
 const dateBuilder = (d) => {
   let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -13,11 +16,15 @@ const dateBuilder = (d) => {
   let month = months[d.getMonth()];
   let year = d.getFullYear();
 
-  return `${day} ${date} ${month} ${year}`
+  return `${day}, ${month} ${date}, ${year}`
 }
 const Weather = ( {data, resetData} ) => {
   const icon = data.weather[0].icon;
-  const iconUrl = 'https://openweathermap.org/img/wn/10d@2x.png'
+  const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`
+  //Check temperature and assign an icon
+  const tempThreshold = 60; //Define the threshold for cold/hot
+  const tempIcon = data.main.temp < tempThreshold ? <FontAwesomeIcon icon={faTemperatureArrowDown} /> : <FontAwesomeIcon icon={faTemperatureArrowUp} />;
+
  const convertUnix = (timestamp) => {
     const ts = new Date(timestamp * 1000);
     const hh = ts.getHours().toString().padEnd(2, '0');
@@ -28,7 +35,7 @@ return (
    <>
     <div id='top-half'>
         <div id='Temp-D'>
-          <p id='temp'>{Math.trunc(data.main.temp)}{'\u00B0'}F |</p>
+          <p id='temp'>{tempIcon} {Math.trunc(data.main.temp)}{'\u00B0'}F |</p>
           <p id='temp-desc'>{data.weather[0].description}</p>
         </div>
         <div>
@@ -43,8 +50,9 @@ return (
         </div>
     <div id='bottom-half'>
        <div>
-        <p id='humidity'><FontAwesomeIcon icon={faDroplet} />Humidity: {data.main.humidity}%</p>
-        <p id='wind-speed'><FontAwesomeIcon icon={faWind} />Wind Speed: {data.wind.speed} mi/hr</p>
+        <p id='current'><FontAwesomeIcon icon={faClock} /> Current: {convertUnix(data.dt)}</p>
+        <p id='humidity'><FontAwesomeIcon icon={faDroplet} /> Humidity: {data.main.humidity}%</p>
+        <p id='wind-speed'><FontAwesomeIcon icon={faWind} /> Wind Speed: {data.wind.speed} mi/hr</p>
        </div>
     </div>
     {/* bonus button */}

@@ -14,9 +14,11 @@ body {
   background-position: center;
   background-image: url('./assets/PhotoWarm.jpg'); /* Warm weather background */
   transition: background-image 0.5s ease-in-out;
+
 }
 .App.cold{
   background-image: url(./assets/Photo1.jpg);
+  color: white;
 }
 
 code {

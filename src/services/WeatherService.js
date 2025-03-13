@@ -18,10 +18,10 @@ const getData = async (c) => {
         const res = await fetch(url);
         if(!res.ok) {
           if(res.status === 404) {
-            throw new Error('Response status: ${res.status}. Assure the city input is valid.')
+            throw new Error(`Response status: ${res.status}. Assure the city input is valid.`)
           } 
           if(res.status === 401){
-            throw new Error('Response status: ${res.status}. Assure your api key is active or not timed out.');
+            throw new Error(`Response status: ${res.status}. Assure your api key is active or not timed out.`);
           }
         }
 
