@@ -20,15 +20,15 @@ const dateBuilder = (d) => {
 }
 const Weather = ( {data, resetData} ) => {
   const icon = data.weather[0].icon;
-  const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`
+  const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
   //Check temperature and assign an icon
   const tempThreshold = 60; //Define the threshold for cold/hot
   const tempIcon = data.main.temp < tempThreshold ? <FontAwesomeIcon icon={faTemperatureArrowDown} /> : <FontAwesomeIcon icon={faTemperatureArrowUp} />;
 
  const convertUnix = (timestamp) => {
     const ts = new Date(timestamp * 1000);
-    const hh = ts.getHours().toString().padEnd(2, '0');
-    const mm = ts.getMinutes().toString().padEnd(2, '0');
+    const hh = ts.getHours().toString().padStart(2, '0');
+    const mm = ts.getMinutes().toString().padStart(2, '0');
     return `${hh}:${mm}`
   }
 return (
